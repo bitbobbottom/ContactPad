@@ -1,0 +1,198 @@
+@model ContactNotePad.Models.Contact
+
+@{
+    ViewBag.Title = "Szczegóły kontaktu";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h2 class="display-5 fw-bold mb-2">Szczegóły kontaktu</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Kontakty</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Model.FirstName @Model.LastName</li>
+                </ol>
+            </nav>
+        </div>
+        <div>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-outline-secondary rounded-pill px-4 me-2">
+                <i class="bi bi-arrow-left me-2"></i>Powrót
+            </a>
+            <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary rounded-pill px-4">
+                <i class="bi bi-pencil-square me-2"></i>Edytuj
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card profile-card border-0 shadow-sm rounded-4 mb-4 hover-scale">
+                <div class="card-body text-center p-4">
+                    <div class="avatar-profile mx-auto mb-3">
+                        <span class="avatar-initials">@Model.FirstName[0]@Model.LastName[0]</span>
+                    </div>
+                    <h3 class="mb-1">@Model.FirstName @Model.LastName</h3>
+                    <p class="text-muted mb-3">Kontakt</p>
+
+                    <div class="d-flex justify-content-center gap-3 mb-4">
+                        <a href="mailto:@Model.Email" class="btn btn-outline-primary rounded-circle p-2">
+                            <i class="bi bi-envelope-fill"></i>
+                        </a>
+                        <a href="tel:@Model.PhoneNumber" class="btn btn-outline-primary rounded-circle p-2">
+                            <i class="bi bi-telephone-fill"></i>
+                        </a>
+                        <button class="btn btn-outline-primary rounded-circle p-2">
+                            <i class="bi bi-share-fill"></i>
+                        </button>
+                    </div>
+
+                    <div class="text-start">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-calendar-check me-2 text-primary"></i>
+                            <span>Dodano: @Model.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 hover-scale">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-4"><i class="bi bi-info-circle-fill text-primary me-2"></i>Informacje</h4>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="detail-card p-3 rounded-3 bg-light">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-envelope-fill text-primary me-2"></i>
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <p class="mb-0">
+                                    @if (string.IsNullOrEmpty(Model.Email))
+                                    {
+                                        <span class="text-muted">Brak danych</span>
+                                    }
+                                    else
+                                    {
+                                        <a href="mailto:@Model.Email">@Model.Email</a>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="detail-card p-3 rounded-3 bg-light">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-telephone-fill text-primary me-2"></i>
+                                    <h6 class="mb-0">Telefon</h6>
+                                </div>
+                                <p class="mb-0">
+                                    @if (string.IsNullOrEmpty(Model.PhoneNumber))
+                                    {
+                                        <span class="text-muted">Brak danych</span>
+                                    }
+                                    else
+                                    {
+                                        <a href="tel:@Model.PhoneNumber">@Model.PhoneNumber</a>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="detail-card p-3 rounded-3 bg-light">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-geo-alt-fill text-primary me-2"></i>
+                                    <h6 class="mb-0">Adres</h6>
+                                </div>
+                                <p class="mb-0">
+                                    @if (string.IsNullOrEmpty(Model.Address))
+                                    {
+                                        <span class="text-muted">Brak danych</span>
+                                    }
+                                    else
+                                    {
+                                        @Model.Address
+                                    }
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="detail-card p-3 rounded-3 bg-light">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-card-text text-primary me-2"></i>
+                                    <h6 class="mb-0">Opis</h6>
+                                </div>
+                                <p class="mb-0">
+                                    @if (string.IsNullOrEmpty(Model.Description))
+                                    {
+                                        <span class="text-muted">Brak opisu</span>
+                                    }
+                                    else
+                                    {
+                                        @Model.Description
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom CSS */
+    .hover-scale {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-scale:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .avatar-profile {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4e54c8, #8f94fb);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .avatar-initials {
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .detail-card {
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .detail-card:hover {
+        background-color: #f8f9fa !important;
+        border-color: rgba(78, 84, 200, 0.2);
+    }
+
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+
+    .rounded-3 {
+        border-radius: 0.75rem !important;
+    }
+</style>

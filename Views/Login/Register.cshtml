@@ -1,0 +1,106 @@
+@model ContactNotePad.Models.User
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="text-center">
+                        <i class="bi bi-person-plus fs-1 mb-2"></i>
+                        <h2 class="fw-bold mb-0">Create Account</h2>
+                        <p class="mb-0">Join us today</p>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Register" class="needs-validation" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
+
+                        <div class="mb-4">
+                            <label asp-for="Nickname" class="form-label fw-semibold"></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-person-fill text-muted"></i></span>
+                                <input asp-for="Nickname" class="form-control form-control-lg" placeholder="Enter your username" />
+                                <span asp-validation-for="Nickname" class="invalid-feedback d-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Email" class="form-label fw-semibold"></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-envelope-fill text-muted"></i></span>
+                                <input asp-for="Email" type="email" class="form-control form-control-lg" placeholder="Enter your email" />
+                                <span asp-validation-for="Email" class="invalid-feedback d-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="PasswordHash" class="form-label fw-semibold">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-lock-fill text-muted"></i></span>
+                                <input asp-for="PasswordHash" type="password" class="form-control form-control-lg" placeholder="Create a password" />
+                                <span asp-validation-for="PasswordHash" class="invalid-feedback d-block"></span>
+                            </div>
+                            <div class="form-text">Use 8 or more characters with a mix of letters, numbers & symbols</div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg py-3 fw-semibold">
+                                <i class="bi bi-person-check me-2"></i>Register Now
+                            </button>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <p class="mb-0">Already have an account? <a asp-action="Index" class="text-decoration-none">Sign in</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+        }
+        .card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .form-control:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        .input-group-text {
+            transition: all 0.3s;
+        }
+        .form-control:focus + .input-group-text {
+            color: #0d6efd;
+        }
+    </style>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        (() => {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+}
